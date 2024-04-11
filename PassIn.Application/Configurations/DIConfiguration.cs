@@ -18,11 +18,13 @@ public static class DIConfiguration
         #region Services
         _ = services.AddScoped<IEventsService, EventsService>();
         _ = services.AddScoped<IAttendeesService, AttendeesService>();
+        _ = services.AddScoped<ICheckInsService, CheckInsService>();
         #endregion
 
         #region Repositories
         _ = services.AddScoped<IEventsRepository, EventsRepository>();
         _ = services.AddScoped<IAttendeeRepository, AttendeeRepository>();
+        _ = services.AddScoped<ICheckInsRepository, CheckInsRepository>();
         #endregion
 
         return services;
