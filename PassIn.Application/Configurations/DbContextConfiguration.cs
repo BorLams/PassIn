@@ -3,7 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PassIn.Infrastructure.Contexts;
 
-namespace PassIn.Api.Configurations;
+namespace PassIn.Application.Configurations;
 
 public static class DbContextConfiguration
 {
@@ -13,7 +13,7 @@ public static class DbContextConfiguration
 
         services.AddDbContext<PassInDbContext>(options =>
         {
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), options => options.MigrationsAssembly(typeof(DbContextConfiguration).Assembly.FullName));
+            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString), options => options.MigrationsAssembly("PassIn.Api"));
         });
 
         return services;

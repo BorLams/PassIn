@@ -42,11 +42,13 @@ public class AttendeeRepository : IAttendeeRepository
 
     public async Task<IEnumerable<Attendee>> GetAllAsync()
         => await DbSet.Include(a => a.Event)
+                      .Include(a => a.CheckIn)
                       .AsNoTracking()
                       .ToListAsync();
 
     public async Task<IEnumerable<Attendee>> GetAllByEventIdAsync(Guid eventId)
         => await DbSet.Include(a => a.Event)
+                      .Include(a => a.CheckIn)
                       .Where(a => a.EventId == eventId)
                       .AsNoTracking()
                       .ToListAsync();

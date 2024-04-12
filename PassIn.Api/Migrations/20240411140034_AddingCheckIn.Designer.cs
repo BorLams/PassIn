@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PassIn.Infrastructure.Contexts;
 
@@ -11,9 +12,11 @@ using PassIn.Infrastructure.Contexts;
 namespace PassIn.Api.Migrations
 {
     [DbContext(typeof(PassInDbContext))]
-    partial class PassInDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411140034_AddingCheckIn")]
+    partial class AddingCheckIn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,8 +64,7 @@ namespace PassIn.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AttendeeId")
-                        .IsUnique();
+                    b.HasIndex("AttendeeId");
 
                     b.ToTable("CheckIns");
                 });
@@ -104,17 +106,12 @@ namespace PassIn.Api.Migrations
             modelBuilder.Entity("PassIn.Domain.Entities.CheckIn", b =>
                 {
                     b.HasOne("PassIn.Domain.Entities.Attendee", "Attendee")
-                        .WithOne("CheckIn")
-                        .HasForeignKey("PassIn.Domain.Entities.CheckIn", "AttendeeId")
+                        .WithMany()
+                        .HasForeignKey("AttendeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Attendee");
-                });
-
-            modelBuilder.Entity("PassIn.Domain.Entities.Attendee", b =>
-                {
-                    b.Navigation("CheckIn");
                 });
 
             modelBuilder.Entity("PassIn.Domain.Entities.Event", b =>

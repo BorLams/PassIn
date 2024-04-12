@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PassIn.Application.Data.Dtos.Attendee.Response;
+using PassIn.Application.Data.Dtos.CheckIn.Response;
 using PassIn.Application.Data.Dtos.Event.Request;
 using PassIn.Application.Data.Dtos.Event.Response;
 using PassIn.Domain.Entities;
@@ -19,6 +20,7 @@ public class DomainToDtoProfile : Profile
             .ForMember(dto => dto.AttendeesAmount, config => config.MapFrom(e => e.Attendees.Count()));
         CreateMap<Event, ResponseRegisteredEventDto>();
         CreateMap<Attendee, ResponseAttendeeDto>();
+        CreateMap<CheckIn, ResponseCheckInDto>();
         #endregion
     }
 }

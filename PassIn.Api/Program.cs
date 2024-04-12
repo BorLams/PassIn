@@ -1,4 +1,3 @@
-using PassIn.Api.Configurations;
 using PassIn.Application.Configurations;
 using PassIn.Application.Data.Mapping;
 using System.Text.Json.Serialization;

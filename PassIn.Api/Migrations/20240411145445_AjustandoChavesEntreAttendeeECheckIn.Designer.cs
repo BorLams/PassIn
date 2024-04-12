@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PassIn.Infrastructure.Contexts;
 
@@ -11,9 +12,11 @@ using PassIn.Infrastructure.Contexts;
 namespace PassIn.Api.Migrations
 {
     [DbContext(typeof(PassInDbContext))]
-    partial class PassInDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411145445_AjustandoChavesEntreAttendeeECheckIn")]
+    partial class AjustandoChavesEntreAttendeeECheckIn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

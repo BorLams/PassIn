@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PassIn.Domain.Entities;
 public class Attendee
@@ -10,7 +9,8 @@ public class Attendee
     public string Email { get; set; }
     public DateTime CreatedAt { get; set; }
 
-    [ForeignKey(nameof(Event))]
     public Guid EventId { get; set; }
     public virtual Event Event { get; set; }
+
+    public virtual CheckIn CheckIn { get; set; }
 }
