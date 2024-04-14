@@ -5,6 +5,9 @@ public class ValidationResult
     public List<string> ErrorMessages { get; }
     public bool IsValid => ErrorMessages.Count == 0;
 
+    private readonly string _errorMessagesException = "All error messages must have a value.";
+    private readonly string _errorMessageException = "Error message must have a value.";
+
     #region Constructors
     public ValidationResult()
     {
@@ -22,11 +25,11 @@ public class ValidationResult
     }
     #endregion
 
-    public void AddValidation(string errorMessage)
+    public void AddError(string errorMessage)
     {
-        if (string.IsNullOrWhiteSpace(errorMessage))
+        if (ValidateErrorMessage(errorMessage))
         {
-            throw new ApplicationException("Error message cannot be null.");
+            throw new ApplicationException(_errorMessageException);
         }
         else
         {
@@ -34,15 +37,25 @@ public class ValidationResult
         }
     }
 
-    public void AddValidation(IEnumerable<string> errorMessages)
+    public void AddError(IEnumerable<string> errorMessages)
     {
-        if (errorMessages.Any() && !errorMessages.Any(string.IsNullOrWhiteSpace))
-        {
+        if (ValidateErrorMessage(errorMessages))
             ErrorMessages.AddRange(errorMessages);
-        }
         else
-        {
-            throw new ApplicationException("All error messages must have a value.");
-        }
+            throw new ApplicationException(_errorMessagesException);
     }
+
+    public void AddValidationResult(ValidationResult validation)
+    {
+        if (!validation.IsValid)
+            ErrorMessages.AddRange(validation.ErrorMessages);
+    }
+
+    #region Private Methods
+    private static bool ValidateErrorMessage(IEnumerable<string> errorMessages)
+        => errorMessages.Any() && !errorMessages.Any(string.IsNullOrWhiteSpace);
+
+    private static bool ValidateErrorMessage(string errorMessage)
+        => string.IsNullOrWhiteSpace(errorMessage);
+    #endregion
 }

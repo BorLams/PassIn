@@ -11,12 +11,14 @@ public class CheckInsService : ICheckInsService
 {
     #region Service Initialization
     private readonly ICheckInsRepository _repository;
+    private readonly IAttendeeRepository _attendeeRepository;
     private readonly IMapper _mapper;
 
-    public CheckInsService(ICheckInsRepository repository, IMapper mapper)
+    public CheckInsService(ICheckInsRepository repository, IMapper mapper, IAttendeeRepository attendeeRepository)
     {
         _mapper = mapper;
         _repository = repository;
+        _attendeeRepository = attendeeRepository;
     }
     #endregion
 
@@ -39,12 +41,15 @@ public class CheckInsService : ICheckInsService
     }
 
     #region Private Methods
-    private static ValidationResult Validate(RequestCheckInDto request)
+    private async ValidationResult Validate(RequestCheckInDto request)
     {
         var validation = new ValidationResult();
 
         if (Equals(request.AttendeeId, Guid.Empty))
-            validation.AddValidation("Attendee's Id cannot be empty");
+            validation.AddError("Attendee's Id cannot be empty");
+
+        else if (!await _attendeeRepository.DoesAttendeeExist(request.AttendeeId))
+            validation.AddError("");
 
         return validation;
     }

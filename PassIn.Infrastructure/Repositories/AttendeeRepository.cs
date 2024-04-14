@@ -52,4 +52,7 @@ public class AttendeeRepository : IAttendeeRepository
                       .Where(a => a.EventId == eventId)
                       .AsNoTracking()
                       .ToListAsync();
+
+    public async Task<bool> DoesAttendeeExist(Guid id)
+        => await DbSet.AnyAsync(a => a.Id == id);
 }
