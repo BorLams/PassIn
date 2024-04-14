@@ -53,6 +53,6 @@ public class AttendeeRepository : IAttendeeRepository
                       .AsNoTracking()
                       .ToListAsync();
 
-    public async Task<bool> DoesAttendeeExist(Guid id)
+    public async Task<bool> DoesAttendeeExistAsync(Guid id)
         => await DbSet.AnyAsync(a => a.Id == id);
 }

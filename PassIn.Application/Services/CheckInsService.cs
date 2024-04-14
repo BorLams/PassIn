@@ -27,7 +27,7 @@ public class CheckInsService : ICheckInsService
 
     public async Task<(ValidationResult, ResponseCheckInDto)> CheckInAsync(RequestCheckInDto request)
     {
-        var validation = Validate(request);
+        var validation = await Validate(request);
         ResponseCheckInDto response = null;
 
         if (validation.IsValid)
@@ -41,15 +41,15 @@ public class CheckInsService : ICheckInsService
     }
 
     #region Private Methods
-    private async ValidationResult Validate(RequestCheckInDto request)
+    private async Task<ValidationResult> Validate(RequestCheckInDto request)
     {
         var validation = new ValidationResult();
 
         if (Equals(request.AttendeeId, Guid.Empty))
             validation.AddError("Attendee's Id cannot be empty");
 
-        else if (!await _attendeeRepository.DoesAttendeeExist(request.AttendeeId))
-            validation.AddError("");
+        else if (!await _attendeeRepository.DoesAttendeeExistAsync(request.AttendeeId))
+            validation.AddError("Attendee not found");
 
         return validation;
     }
