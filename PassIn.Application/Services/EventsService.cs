@@ -51,15 +51,15 @@ public class EventsService : IEventsService
 
         if (request.MaximumAttendees <= 0)
         {
-            validation.AddValidation($"{nameof(request.MaximumAttendees)} cannot be less than or equal to zero.");
+            validation.AddError($"{nameof(request.MaximumAttendees)} cannot be less than or equal to zero.");
         }
         if (string.IsNullOrWhiteSpace(request.Title))
         {
-            validation.AddValidation($"{nameof(request.Title)} cannot be empty.");
+            validation.AddError($"{nameof(request.Title)} cannot be empty.");
         }
         if (string.IsNullOrWhiteSpace(request.Details))
         {
-            validation.AddValidation($"{nameof(request.Details)} cannot be empty.");
+            validation.AddError($"{nameof(request.Details)} cannot be empty.");
         }
 
         return validation;

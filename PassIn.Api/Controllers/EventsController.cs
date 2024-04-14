@@ -40,7 +40,7 @@ public class EventsController : ControllerBase
 
         var validation = new ValidationResult();
         if (response is null)
-            validation.AddValidation("No event was found.");
+            validation.AddError("No event was found.");
 
         return validation.IsValid ? Ok(response) : NotFound(validation.ErrorMessages.First());
     }
@@ -54,7 +54,7 @@ public class EventsController : ControllerBase
 
         var validation = new ValidationResult();
         if (!response.Any())
-            validation.AddValidation("There's no event registered.");
+            validation.AddError("There's no event registered.");
 
         return validation.IsValid ? Ok(response) : NotFound(new ResponseErrorDto(validation.ErrorMessages.First()));
     }

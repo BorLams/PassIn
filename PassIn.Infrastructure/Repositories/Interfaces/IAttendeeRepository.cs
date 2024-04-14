@@ -8,4 +8,5 @@ public interface IAttendeeRepository
     Task<Attendee> RegisterAttendeeAsync(Attendee attendee);
     Task<int> CountAttendeesByEventIdAsync(Guid eventId);
     Task<bool> IsEmailInUseAsync(string email);
+    Task<bool> DoesAttendeeExistAsync(Guid id);
 }

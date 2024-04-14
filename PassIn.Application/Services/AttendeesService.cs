@@ -49,28 +49,28 @@ public class AttendeesService : IAttendeesService
         var validation = new ValidationResult();
 
         if (string.IsNullOrWhiteSpace(request.Name))
-            validation.AddValidation("Attendee's name cannot be empty.");
+            validation.AddError("Attendee's name cannot be empty.");
 
         #region Event
         if (Equals(request.EventId, Guid.Empty))
-            validation.AddValidation("Attendee's event id cannot be empty.");
+            validation.AddError("Attendee's event id cannot be empty.");
 
         else if (!await _eventsService.DoesEventExistAsync(request.EventId))
-            validation.AddValidation("There's no event using the requested Id");
+            validation.AddError("There's no event using the requested Id");
 
         else if (await IsEventFullAsync(request.EventId))
-            validation.AddValidation("This event is full.");
+            validation.AddError("This event is full.");
         #endregion
 
         #region Email
         if (string.IsNullOrWhiteSpace(request.Email))
-            validation.AddValidation("Attendee's email cannot be empty.");
+            validation.AddError("Attendee's email cannot be empty.");
 
         else if (!MailAddress.TryCreate(request.Email, out _))
-            validation.AddValidation("Attendee's email is not valid.");
+            validation.AddError("Attendee's email is not valid.");
 
         else if (await _repository.IsEmailInUseAsync(request.Email))
-            validation.AddValidation("Attendee's email is already in use.");
+            validation.AddError("Attendee's email is already in use.");
         #endregion
 
         return validation;
